@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 public class UsrHomeMainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String name = request.getParameter("name");
 		// 들어오는 파리미터를 UTF-8로 해석
 		request.setCharacterEncoding("UTF-8");
 		// 서블릿이 HTML 파일을 만들때 UTF-8 로 쓰기
