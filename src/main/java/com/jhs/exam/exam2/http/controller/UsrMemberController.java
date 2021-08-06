@@ -1,9 +1,7 @@
 package com.jhs.exam.exam2.http.controller;
 
-import java.util.List;
-
 import com.jhs.exam.exam2.container.Container;
-import com.jhs.exam.exam2.dto.Article;
+import com.jhs.exam.exam2.dto.Member;
 import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.http.Rq;
 import com.jhs.exam.exam2.service.MemberService;
@@ -21,10 +19,18 @@ public class UsrMemberController extends Controller {
 		case "doLogin":
 			actionDoLogin(rq);
 			break;
+		case "doLogout":
+			actionDoLogout(rq);
+			break;
 		default:
 			rq.println("존재하지 않는 페이지 입니다.");
 			break;
 		}
+	}
+
+	private void actionDoLogout(Rq rq) {
+		rq.removeSessionAttr("loginedMemberJson");
+		rq.replace(null, "../article/list");
 	}
 
 	private void actionDoLogin(Rq rq) {
@@ -46,6 +52,11 @@ public class UsrMemberController extends Controller {
 		if (loginRd.isFail()) {
 			rq.historyBack(loginRd.getMsg());
 		}
+
+		Member member = (Member) loginRd.getBody().get("member");
+
+		rq.setSessionAttr("loginedMemberJson", Ut.toJson(member, ""));
+		rq.replace(loginRd.getMsg(), "../article/list");
 	}
 
 	private void actionShowLogin(Rq rq) {
