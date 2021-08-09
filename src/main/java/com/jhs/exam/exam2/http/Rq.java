@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jhs.exam.exam2.dto.Member;
 import com.jhs.exam.exam2.util.Ut;
 
 import lombok.Getter;
@@ -36,26 +35,19 @@ public class Rq {
 	@Setter
 	private int loginedMemberId = 0;
 	
-	@Getter
-	@Setter
-	private Member loginedMember = null;
-	
 	public boolean isNotLogined() {
 		return isLogined == false;
 	}
 
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
-		// 들어오는 파리미터를 UTF-8로 해석
 		try {
 			req.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 
-		// 서블릿이 HTML 파일을 만들때 UTF-8 로 쓰기
 		resp.setCharacterEncoding("UTF-8");
 
-		// HTML이 UTF-8 형식이라는 것을 브라우저에게 알린다.
 		resp.setContentType("text/html; charset=UTF-8");
 
 		this.req = req;
@@ -100,7 +92,7 @@ public class Rq {
 			e.printStackTrace();
 		}
 	}
-
+ 
 	public String getParam(String paramName, String defaultValue) {
 		String paramValue = req.getParameter(paramName);
 

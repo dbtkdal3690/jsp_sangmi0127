@@ -1,12 +1,13 @@
 package com.jhs.exam.exam2.http.controller;
 
+import java.util.List;
+
 import com.jhs.exam.exam2.container.Container;
-import com.jhs.exam.exam2.dto.Member;
+import com.jhs.exam.exam2.dto.Article;
 import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.http.Rq;
 import com.jhs.exam.exam2.service.MemberService;
 import com.jhs.exam.exam2.util.Ut;
-
 public class UsrMemberController extends Controller {
 	private MemberService memberService = Container.memberService;
 
@@ -19,47 +20,40 @@ public class UsrMemberController extends Controller {
 		case "doLogin":
 			actionDoLogin(rq);
 			break;
-		case "doLogout":
-			actionDoLogout(rq);
-			break;
 		default:
-			rq.println("Á¸ÀçÇÏÁö ¾Ê´Â ÆäÀÌÁö ÀÔ´Ï´Ù.");
+			rq.println("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” í˜ì´ì§€ì…ë‹ˆë‹¤.");
 			break;
 		}
 	}
 
-	private void actionDoLogout(Rq rq) {
-		rq.removeSessionAttr("loginedMemberJson");
-		rq.replace(null, "../article/list");
-	}
+	
 
 	private void actionDoLogin(Rq rq) {
-		String loginId = rq.getParam("loginId", "");
-		String loginPw = rq.getParam("loginPw", "");
-
-		if (loginId.length() == 0) {
-			rq.historyBack("loginId¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+		String loginId = rq.getParam("loginId","");
+		String loginPw = rq.getParam("loginPw","");
+		
+		if ( loginId.length() == 0 ) {
+			rq.historyBack("loginIdë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
-
-		if (loginPw.length() == 0) {
-			rq.historyBack("loginPw¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+		
+		if ( loginPw.length() == 0 ) {
+			rq.historyBack("loginPwë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
-
+		
 		ResultData loginRd = memberService.login(loginId, loginPw);
-
-		if (loginRd.isFail()) {
-			rq.historyBack(loginRd.getMsg());
-		}
-
-		Member member = (Member) loginRd.getBody().get("member");
-
-		rq.setSessionAttr("loginedMemberJson", Ut.toJson(member, ""));
-		rq.replace(loginRd.getMsg(), "../article/list");
+		
+			if (loginRd.isFail()) {
+				rq.historyBack(loginRd.getMsg());
+			}
 	}
-
+	
 	private void actionShowLogin(Rq rq) {
 		rq.jsp("usr/member/login");
+		
 	}
+	
+
+	
 }

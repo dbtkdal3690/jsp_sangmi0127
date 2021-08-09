@@ -19,7 +19,7 @@ public class DispatcherServlet extends HttpServlet {
 		Rq rq = new Rq(req, resp);
 
 		if (rq.isInvalid()) {
-			rq.print("�ùٸ� ��û�� �ƴմϴ�.");
+			rq.print("올바른 요청이 아닙니다.");
 		}
 
 		Controller controller = null;
@@ -51,17 +51,6 @@ public class DispatcherServlet extends HttpServlet {
 
 	private boolean runInterceptors(Rq rq) {
 
-		if (Container.beforeActionInterceptor.runBeforeAction(rq) == false) {
-			return false;
-		}
-
-		if (Container.needLoginInterceptor.runBeforeAction(rq) == false) {
-			return false;
-		}
-
-		if (Container.needLogoutInterceptor.runBeforeAction(rq) == false) {
-			return false;
-		}
 
 		return true;
 	}

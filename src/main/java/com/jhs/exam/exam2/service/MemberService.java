@@ -7,19 +7,18 @@ import com.jhs.exam.exam2.repository.MemberRepository;
 
 public class MemberService {
 	private MemberRepository memberRepository = Container.memberRepository;
-
-	public ResultData login(String loginId, String loginPw) {
+	
+	public ResultData login(String loginId, String loginPw ) {
 		Member member = memberRepository.getMemberByLoginId(loginId);
-
-		if (member == null) {
-			return ResultData.from("F-1", "Á¸ÀçÇÏÁö ¾Ê´Â È¸¿øÀÇ ·Î±×ÀÎ¾ÆÀÌµğ ÀÔ´Ï´Ù.");
+		
+		if ( member == null ) {
+			return ResultData.from("F-1", "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” íšŒì›ì˜ ë¡œê·¸ì¸ì•„ì´ë”” ì…ë‹ˆë‹¤.");
 		}
-
-		if (member.getLoginPw().equals(loginPw) == false) {
-			return ResultData.from("F-2", "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+		
+		if ( member.getLoginPw().equals(loginPw) == false ) {
+			return ResultData.from("F-2", "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 		}
-
-		return ResultData.from("S-1", "È¯¿µÇÕ´Ï´Ù.", "member", member);
+		
+		return ResultData.from("S-1","í™˜ì˜í•©ë‹ˆë‹¤.");
 	}
-
 }
