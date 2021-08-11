@@ -37,7 +37,7 @@ public class UsrArticleController extends Controller {
 			actionDoDelete(rq);
 			break;
 		default:
-			rq.println("Á¸ÀçÇÏÁö ¾Ê´Â ÆäÀÌÁö ÀÔ´Ï´Ù.");
+			rq.println("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” í˜ì´ì§€ ì…ë‹ˆë‹¤.");
 			break;
 		}
 	}
@@ -47,34 +47,34 @@ public class UsrArticleController extends Controller {
 		String redirectUri = rq.getParam("redirectUri", "../article/list");
 
 		if (id == 0) {
-			rq.historyBack("id¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			rq.historyBack("idë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		Article article = articleService.getForPrintArticleById(id);
 		
 		if ( article == null ) {
-			rq.historyBack(Ut.f("%d¹ø °Ô½Ã¹°ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.", id));
+			rq.historyBack(Ut.f("%dë²ˆ ê²Œì‹œë¬¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.", id));
 			return;
 		}
 		
 		articleService.delete(id);
 
-		rq.replace(Ut.f("%d¹ø °Ô½Ã¹°À» »èÁ¦ÇÏ¿´½À´Ï´Ù.", id), redirectUri);
+		rq.replace(Ut.f("%d ê²Œì‹œë¬¼ì„ ì‚­ì œí•˜ì˜€ìŠµë‹ˆë‹¤..", id), redirectUri);
 	}
 
 	private void actionShowDetail(Rq rq) {
 		int id = rq.getIntParam("id", 0);
 
 		if (id == 0) {
-			rq.historyBack("id¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			rq.historyBack("idë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		Article article = articleService.getForPrintArticleById(id);
 		
 		if ( article == null ) {
-			rq.historyBack(Ut.f("%d¹ø °Ô½Ã¹°ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.", id));
+			rq.historyBack(Ut.f("%dë²ˆ ê²Œì‹œë¬¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.", id));
 			return;
 		}
 
@@ -95,12 +95,12 @@ public class UsrArticleController extends Controller {
 		String redirectUri = rq.getParam("redirectUri", "../article/list");
 
 		if (title.length() == 0) {
-			rq.historyBack("titleÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			rq.historyBack("titleë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		if (body.length() == 0) {
-			rq.historyBack("body¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			rq.historyBack("bodyë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
@@ -123,17 +123,17 @@ public class UsrArticleController extends Controller {
 		String redirectUri = rq.getParam("redirectUri", Ut.f("../article/detail?id=%d", id));
 		
 		if (id == 0) {
-			rq.historyBack("id¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			rq.historyBack("idë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		if (title.length() == 0) {
-			rq.historyBack("titleÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			rq.historyBack("titleë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		if (body.length() == 0) {
-			rq.historyBack("body¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			rq.historyBack("bodyë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
@@ -146,14 +146,14 @@ public class UsrArticleController extends Controller {
 		int id = rq.getIntParam("id", 0);
 
 		if (id == 0) {
-			rq.historyBack("id¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			rq.historyBack("idë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return;
 		}
 
 		Article article = articleService.getForPrintArticleById(id);
 		
 		if ( article == null ) {
-			rq.historyBack(Ut.f("%d¹ø °Ô½Ã¹°ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.", id));
+			rq.historyBack(Ut.f("%dë²ˆ ê²Œì‹œë¬¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.", id));
 			return;
 		}
 
