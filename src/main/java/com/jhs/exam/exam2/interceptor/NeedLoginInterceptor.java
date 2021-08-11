@@ -22,7 +22,7 @@ public class NeedLoginInterceptor extends Interceptor {
 		}
 		
 		if ( rq.isNotLogined() ) {
-			rq.historyBack("·Î±×ÀÎ ÈÄ ÀÌ¿ëÇØÁÖ¼¼¿ä.");
+			rq.historyBack("ë¡œê·¸ì¸ í›„ ì´ìš©í•´ì£¼ì„¸ìš”.");
 			
 			return false;
 		}
