@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.dto.Article;
+import com.jhs.exam.exam2.dto.Member;
 import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.repository.ArticleRepository;
 import com.jhs.exam.exam2.util.Ut;
@@ -14,7 +15,7 @@ public class ArticleService {
 	public ResultData write(String title, String body) {
 		int id = articleRepository.write(title, body);
 
-		return ResultData.from("S-1", Ut.f("%d¹ø °Ô½Ã¹°ÀÌ »ı¼ºµÇ¾ú½À´Ï´Ù.", id), "id", id);
+		return ResultData.from("S-1", Ut.f("%dë²ˆ ê²Œì‹œë¬¼ì´ ìƒì„±ë˜ì—ˆìŠµë‹ˆë‹¤.", id), "id", id);
 	}
 
 	public List<Article> getForPrintArticles() {
@@ -28,13 +29,34 @@ public class ArticleService {
 	public ResultData delete(int id) {
 		articleRepository.delete(id);
 
-		return ResultData.from("S-1", Ut.f("%d¹ø °Ô½Ã¹°ÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù.", id), "id", id);
+		return ResultData.from("S-1", Ut.f("%dë²ˆ ê²Œì‹œë¬¼ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.", id), "id", id);
 	}
 
 	public ResultData modify(int id, String title, String body) {
 		articleRepository.modify(id, title, body);
 
-		return ResultData.from("S-1", Ut.f("%d¹ø °Ô½Ã¹°ÀÌ ¼öÁ¤µÇ¾ú½À´Ï´Ù.", id), "id", id);
+		return ResultData.from("S-1", Ut.f("%dë²ˆ ê²Œì‹œë¬¼ì´ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.", id), "id", id);
 	}
 
+	public ResultData actorCanModify (Member member, Article article ) {
+		int memberId = member.getId();
+		int writerMemberId = article.getMemberId();
+		
+		if (memberId != writerMemberId) {
+			return ResultData.from("F-1","ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.");
+		}
+		
+		return ResultData.from("S-1","ìˆ˜ì •ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+	}
+	
+	public ResultData actorCanDelete(Member member, Article article) {
+		int memberId = member.getId();
+		int writerMemberId = article.getMemberId();
+		
+		if ( memberId != writerMemberId ) {
+			return ResultData.from("F-1", "ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.");
+		}
+		
+		return ResultData.from("S-1", "ì‚­ì œê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+	}
 }
