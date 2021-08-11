@@ -14,7 +14,7 @@ public class Ut {
 
 	public static Map<String, Object> mapOf(Object... args) {
 		if (args.length % 2 != 0) {
-			throw new IllegalArgumentException("ÀÎÀÚ¸¦ Â¦¼ö°³ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			throw new IllegalArgumentException("ì¸ìë¥¼ ì§ìˆ˜ê°œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 		}
 
 		int size = args.length / 2;
@@ -31,7 +31,7 @@ public class Ut {
 			try {
 				key = (String) args[keyIndex];
 			} catch (ClassCastException e) {
-				throw new IllegalArgumentException("Å°´Â StringÀ¸·Î ÀÔ·ÂÇØ¾ß ÇÕ´Ï´Ù. " + e.getMessage());
+				throw new IllegalArgumentException("í‚¤ëŠ” Stringìœ¼ë¡œ ì…ë ¥í•´ì•¼ í•©ë‹ˆë‹¤. " + e.getMessage());
 			}
 
 			value = args[valueIndex];
