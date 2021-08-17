@@ -38,6 +38,7 @@
     grid-column: span 3 / span 3;
   }
 }
-.card-title + * {
-  margin-top:var(--card-title_height);
+.page-menu {
+	text-align:center;
 }
+
