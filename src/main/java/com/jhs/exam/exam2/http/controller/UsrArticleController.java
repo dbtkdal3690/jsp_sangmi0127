@@ -93,14 +93,19 @@ public class UsrArticleController extends Controller {
 		String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "title");
 		String searchKeyword = rq.getParam("searchKeyword", "");
 		
-		int itemsCountInAPage = 5; 
+		int itemsCountInAPage = 10; 
 		int page = rq.getIntParam("page", 1);
+		int boardId = rq.getIntParam("boardId", 0);
 		
-		int totalItemsCount = articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword);
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), searchKeywordTypeCode, searchKeyword, itemsCountInAPage, page);
+		int totalItemsCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), boardId, searchKeywordTypeCode, searchKeyword, itemsCountInAPage, page);
 		
-		int totalPage = 20;
+		int totalPage = (int)Math.ceil((double)totalItemsCount / itemsCountInAPage);
 		
+		rq.setAttr("searchKeywordTypeCode", searchKeywordTypeCode);
+		rq.setAttr("page", page);
+		rq.setAttr("boardId", boardId);
+		rq.setAttr("totalPage", totalPage);
 		rq.setAttr("totalItemsCount", totalItemsCount);
 		rq.setAttr("articles", articles);
 		rq.jsp("usr/article/list");
@@ -124,6 +129,7 @@ public class UsrArticleController extends Controller {
 		}
 
 		ResultData writeRd = articleService.write(boardId, memberId, title, body);
+		
 		int id = (int) writeRd.getBody().get("id");
 
 		redirectUri = redirectUri.replace("[NEW_ID]", id + "");

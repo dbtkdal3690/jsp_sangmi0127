@@ -7,7 +7,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.http.Rq;
@@ -29,29 +28,33 @@ public class DispatcherServlet extends HttpServlet {
 			return;
 		}
 		
-		Controller controller = null;
+		Controller controller = getControllerByRq(rq);
+		
+		if ( controller != null ) {
+			
+			controller.performAction(rq);
+		
+			MysqlUtil.closeConnection();
+		} else {
+			rq.print("올바른 요청이 아닙니다.");
+		}
+		
+	}
+	private Controller getControllerByRq(Rq rq) {
 
 		switch (rq.getControllerTypeName()) {
 		case "usr":
 			switch (rq.getControllerName()) {
 			case "article":
-				controller = Container.usrArticleController;
-				break;
+				return Container.usrArticleController;
 			case "member":
-				controller = Container.usrMemberController;
-				break;
+				return Container.usrMemberController;
 			}
 
 			break;
 		}
 
-		if (controller != null) {
-			controller.performAction(rq);
-
-			MysqlUtil.closeConnection();
-		} else {
-			rq.print("올바른 요청이 아닙니다.");
-		}
+		return null;
 	}
 
 	private boolean runInterceptors(Rq rq) {

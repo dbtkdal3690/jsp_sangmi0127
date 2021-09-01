@@ -22,18 +22,25 @@ public class ArticleRepository {
 		return id;
 	}
 
-	public List<Article> getForPrintArticles(String searchKeywordTypeCode, String searchKeyword, int limitFrom,
+	public List<Article> getForPrintArticles(int boardId, String searchKeywordTypeCode, String searchKeyword, int limitFrom,
 			int limitTake) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT A.*");
 		sql.append(", IFNULL(M.nickname, '삭제된회원') AS extra__writerName");
 		sql.append("FROM article AS A");
-		sql.append("LEFT JOIN member M");
+		sql.append("LEFT JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
 		sql.append("WHERE 1");
 
 		if (searchKeyword != null && searchKeyword.length() > 0) {
 			switch (searchKeywordTypeCode) {
+			case "title,body":
+				sql.append("AND (");
+				sql.append("A.title LIKE CONCAT('%', ?, '%')", searchKeyword);
+				sql.append("OR");
+				sql.append("A.body LIKE CONCAT('%', ?, '%')", searchKeyword);
+				sql.append(")");
+				break;
 			case "body":
 				sql.append("AND A.body LIKE CONCAT('%', ?, '%')", searchKeyword);
 				break;
@@ -44,6 +51,10 @@ public class ArticleRepository {
 			}
 		}
 
+		if (boardId != 0 ) {
+			sql.append("AND A.boardId = ?", boardId);
+		}
+		
 		sql.append("ORDER BY A.id DESC");
 		sql.append("LIMIT ?, ?", limitFrom, limitTake);
 
@@ -85,7 +96,7 @@ public class ArticleRepository {
 		return MysqlUtil.update(sql);
 	}
 
-	public int getArticlesCount(String searchKeywordTypeCode, String searchKeyword) {
+	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT COUNT(*) AS cnt");
 		sql.append("FROM article AS A");
@@ -93,6 +104,13 @@ public class ArticleRepository {
 
 		if (searchKeyword != null && searchKeyword.length() > 0) {
 			switch (searchKeywordTypeCode) {
+			case "title,body":
+				sql.append("AND (");
+				sql.append("A.title LIKE CONCAT('%', ?, '%')", searchKeyword);
+				sql.append("OR");
+				sql.append("A.body LIKE CONCAT('%', ?, '%')", searchKeyword);
+				sql.append(")");
+				break;
 			case "body":
 				sql.append("AND A.body LIKE CONCAT('%', ?, '%')", searchKeyword);
 				break;
