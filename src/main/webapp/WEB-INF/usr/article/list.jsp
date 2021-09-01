@@ -16,16 +16,27 @@
 			</div>
 
 			<div class="px-4 py-4">
-				<div class="badge badge-primary">
-					<c:if test="${param.searchKeyword == null}">
-						전체게시물 개수
-					</c:if>
-					<c:if test="${param.searchKeyword != null}">
-						검색어 `${param.searchKeyword}`, 게시물 개수
-					</c:if>
+				<c:if test="${param.searchKeyword != null && param.searchKeyword != ''}">
+					<div class="badge badge-primary">
+						검색어 타입
+					</div>
+						<span>${param.searchKeywordTypeCode}</span>
+					
+					<br />
+					
+					<div class="badge badge-primary">
+						검색어
+					</div>
+						<span>${param.searchKeyword}</span>
+						
+					<br />
+				</c:if>
+					
+					<div class="badge badge-primary">
 				</div>
-				${totalItemsCount}
+					전체게시물 개수
 			</div>
+				<span>${totalItemsCount}</span>
 
 			<hr />
 
@@ -135,6 +146,8 @@
 
 				<div class="page-menu">
 					<c:set var="baseUri" value="?boardId=${boardId}" />
+					<c:set var="baseUri" value="${baseUri}&searchKeywordTypeCode=${parma.searchKeywordTypeCode}"/>
+					<c:set var="baseUri" value="${baseUri}&searchKeyword=${param.searchKeyword}" />
 
 					<c:set var="pageMenuArmSize" value="7" />
 					<c:set var="startPage" value="${page - pageMenuArmSize >= 1 ? page - pageMenuArmSize : 1}" />
